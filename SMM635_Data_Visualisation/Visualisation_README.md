@@ -1,48 +1,52 @@
-### 1. Individual Project **Platform Economy: The Impact of Uber and Lyft Exit on Austin's Restaurant Industry**
+# 📊 **Data Visualization Projects Overview**
 
-#### Problem Statement:
-The project analyzes the impact of the regulatory exit of Uber and Lyft in Austin, Texas, on the local food service sector, using Yelp reviews and worker mobility data. This study explores whether the absence of these ride-sharing platforms affected the quality of service and food in local restaurants, as well as the mechanisms behind these changes.
+## 1️⃣ **Individual Project: Platform Economy – Uber & Lyft’s Exit Impact on Austin's Restaurants**
 
-#### Steps Taken:
-1. **Data Preprocessing**:
-   - Cleaned and merged Yelp reviews and restaurant mobility datasets.
-   - Segmented the data by location (Austin vs. Dallas) and examined trends over time.
+### Problem Statement:  
+🚗💥 Uber and Lyft exit Austin, TX! We investigate the *ripple effects* on local restaurants using Yelp reviews and labor mobility data. How did this change affect **service** and **food quality**? 📉🍔
 
-2. **Exploratory Data Analysis (EDA)**:
-   - Created visualizations to explore the impact of Uber and Lyft's exit on restaurant reviews, focusing on service and food quality.
-   - Used time-series analysis to assess Yelp review counts before and after the regulatory changes.
-   - Analyzed labor mobility to understand how the absence of ride-sharing services affected restaurant workers' tenure and job quit rates.
+### Steps Taken:
 
-3. **Results**:
-   - Found that Austin's restaurants experienced more negative reviews, particularly in service and food quality, during the period when Uber and Lyft were absent.
-   - Identified that the absence of these platforms may have increased competition in the labor market, leading to higher turnover rates and a temporary improvement in service quality.
+1. **Data Preprocessing**:  
+   - **Cleaned & merged** Yelp reviews and restaurant labor data (using `pandas` 🐼).
+   - Split the data into **Austin** and **Dallas** for comparison. 🌎🔍
 
-4. **Business Implications**:
-   - Suggested that policymakers consider the broader economic impacts when regulating the platform economy.
-   - Recommended that businesses in the food service industry be prepared for workforce fluctuations due to disruptions in the platform economy.
+2. **Exploratory Data Analysis (EDA)**:  
+   - Created **visualizations** to understand Yelp review trends before & after Uber/Lyft exited using `matplotlib` and `seaborn` 🎨.
+   - Used **time-series** analysis to track Yelp review counts (focused on food/service ratings) 🕒🍴.
+   - Explored **labor mobility** to see how worker turnover (quit rates) was affected by the exit. 📊📈
+
+3. **Results**:  
+   - **Austin** saw **worse service and food reviews** during the ride-sharing exit period 📉🍴.
+   - The absence of Uber and Lyft seemed to **boost competition for jobs**, leading to **higher turnover** but also **better service quality** temporarily 🏃‍♀️💼.
+
+4. **Business Implications**:  
+   - **Policymakers** should consider **indirect economic effects** of platform economy regulations 💡📜.
+   - Food service businesses need to be ready for **workforce shifts** during such disruptions! 🏢🔄
 
 ---
 
-### 2. Group Project **Coles Supermarket Sales Data Visualization**
+## 2️⃣ **Group Project: Coles Supermarket Sales Visualization**  
 
-#### Problem Statement:
-This project explores Coles Supermarket's sales performance data, analyzing the relationship between store size and sales performance. The goal is to identify insights that can inform store optimization and strategic decisions related to store expansion.
+### Problem Statement:  
+🏪💰 How does **store size** impact **sales** at Coles Supermarkets? The goal is to extract actionable insights for better store optimization and expansion decisions 🛒📈.
 
-#### Steps Taken:
-1. **Data Preprocessing**:
-   - Cleaned the sales dataset and handled missing values, focusing on improving the quality of the data for analysis.
-   - Used log transformations to address skewed sales data and improve model robustness.
+### Steps Taken:
 
-2. **Exploratory Data Analysis (EDA)**:
-   - Created a series of visualizations, including boxplots, scatterplots, and bar graphs, to investigate the relationship between store size and sales performance.
-   - Identified outliers and skewness in the data, and suggested normalization techniques to improve analysis.
+1. **Data Preprocessing**:  
+   - Cleaned the sales data (handled **missing values**) and removed outliers using `pandas` 🧹.
+   - Applied **log transformation** to **normalize** skewed sales data (using `numpy` and `scipy`) 📉🔄.
 
-3. **Results**:
-   - Found that larger stores generally achieved higher sales, but size alone does not guarantee success.
-   - Observed that some larger stores underperformed, indicating potential inefficiencies in operations or regional factors influencing sales.
+2. **Exploratory Data Analysis (EDA)**:  
+   - Created **boxplots**, **scatterplots**, and **bar graphs** to investigate the relationship between **store size** and **sales** 💡📊.
+   - Identified **outliers** and **skewness** in the data and proposed **normalization** for more accurate insights 🎯.
 
-4. **Business Implications**:
-   - Suggested that Coles focus on location-based strategies to optimize store performance, including targeted marketing and inventory management for underperforming stores.
-   - Recommended that Coles evaluate the "break-even" store size to determine the optimal store expansion strategy, avoiding diminishing returns on sales as store size increases.
+3. **Results**:  
+   - **Larger stores** generally made more money 💵, but **size alone** doesn't guarantee success 🏪❌.
+   - Some **larger stores** underperformed, hinting at **operational inefficiencies** or **regional factors** 🌍🤔.
+
+4. **Business Implications**:  
+   - **Location-based strategies** are essential for optimizing store performance 📍🔧.
+   - Coles should assess the **break-even size** for each store to avoid diminishing returns 🏙️📉.
 
 ---
