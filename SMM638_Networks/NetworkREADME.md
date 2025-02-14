@@ -1,34 +1,50 @@
 # SMM638 Network Analysis
 
-### 📌 **Problem Set 1 – Hotel & Airline Revenue Optimization**  
+### 📌 ** Individual Project Improving Efficiency of R&D Projects at Silicon**
+#### Problem Statement:
+Silicon, a global semiconductor company, wants to improve the efficiency of its R&D projects in microprocessors. The task is to identify how knowledge exchange among team members influences project success, duration, and innovation levels. The analysis involves three datasets: team affiliations, project outcomes, and a knowledge exchange network.
 
-**🔍 Overview**  
-This problem set focuses on **revenue optimization strategies for a hotel and an airline network**, applying pricing policies and dynamic programming concepts.  
+#### Steps Taken:
+1. **Data Preprocessing**:
+   - Cleaned and merged datasets for team affiliation, project outcomes, and the knowledge exchange network.
+   - Calculated network metrics (e.g., average degree, betweenness centrality, clustering coefficient) using NetworkX for employees based on their knowledge-sharing ties.
 
-**📝 Questions**  
-1. **Hotel Room Pricing Strategy**  
-   - A hotel in Cotswolds offers both regular and discounted early reservations.  
-   - The task involves optimizing the number of rooms reserved for each category to maximize revenue.  
-   - Uses **Poisson demand modeling** to compute expected revenue.  
+2. **Statistical Analysis**:
+   - Merged network metrics with project outcome data.
+   - Conducted regression analysis to identify the relationship between network metrics and project outcomes like success, duration, and novelty.
 
-2. **Airline Network Optimization**  
-   - An airline operating flights from **Dublin → London → Edinburgh** needs an optimal seat allocation strategy.  
-   - Requires understanding of **value functions** and **dynamic programming** to modify the airline's pricing model.  
+3. **Results**:
+   - Found that **average degree** and **betweenness centrality** significantly influenced project success and duration.
+   - Proposed that increasing average team degree and managing betweenness centrality could optimize project success and reduce durations.
 
-3. **Real-World Application of Pricing Models**  
-   - Identify a **real-world pricing problem** (e.g., a London-based service) and propose a pricing optimization model.  
+4. **Business Recommendations**:
+   - Increase team network density by facilitating in-person interactions.
+   - Adjust office seating plans to enhance internal collaboration.
+---
+### 📌 ** Group Project Analyzing Music Genre Preferences at Deezer**
+#### Problem Statement:
+Deezer seeks to improve its music recommendation system by understanding the relationships between music genres and user preferences. The task is to analyze the "like" relationships between users and genres, identify genre similarities, and understand the influence of social ties on genre preferences.
 
+#### Steps Taken:
+1. **Data Preprocessing**:
+   - Created a bipartite graph linking users to genres based on their "likes."
+   - Projected the graph to generate a **genre-genre** network and applied network analysis techniques.
 
-### 📌 **Problem Set 1 – Hotel & Airline Revenue Optimization**  
+2. **Network Analysis**:
+   - Used the **Louvain algorithm** to detect communities in the genre network, identifying groups of related genres.
+   - Analyzed **centrality metrics** (degree, betweenness) to assess the importance of genres in the network and their role in user preferences.
 
-## Project Overview
-This project applies revenue management principles to optimize the pricing and operational efficiency of Santander Cycles, a bike-sharing scheme in London. Given challenges such as competition from Lime and high redistribution costs, our goal was to develop dynamic pricing strategies to improve revenue and bike utilization.
+3. **Results**:
+   - Discovered that mainstream genres like **Pop** and **Dance** had the strongest overlap in terms of listeners.
+   - Identified key genres like **Pop** and **Rock** as having the highest centrality and bridging roles in user engagement.
 
-## Group Component
-### Task Description
-As a group, we acted as revenue management consultants tasked with analyzing and improving the revenue model of a local business. We chose Santander Cycles and aimed to:
-- Develop pricing strategies to increase revenue while maintaining affordability.
-- Implement demand-based incentives to redistribute bike availability across stations.
-- Provide data-driven recommendations based on simulation models.
+4. **Business Recommendations**:
+   - Deezer should use central genres like **Pop** and **Rock** as anchors for user engagement in the recommendation system.
+   - Focus on genres with high centrality for talent scouting and strategic artist collaborations.
 
-### Steps Taken
+---
+## Files Included
+- **Data**: Contains cleaned data files used for analysis.
+- **Code**: Python scripts and Jupyter notebooks that perform the data analysis.
+
+---
