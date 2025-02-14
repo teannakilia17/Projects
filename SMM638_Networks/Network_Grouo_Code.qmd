@@ -1,0 +1,501 @@
+---
+title: Group 8 Assignment
+moduel: SMM638 Network Analytics
+jupyter: python3
+---
+
+## Notebook setup
+```{python}
+# load the necessary libraries
+from collections import Counter
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import networkx as nx
+```
+
+# Import data
+```{python}
+#Import the data for this assignment
+ke_data = "https://raw.githubusercontent.com/simoneSantoni/net-analysis-smm638/d67cda1b431fba337f760acc6d98bdcf47a1f417/midTermProject/knowledge_exchange_network.csv"
+
+
+ke = pd.read_csv(ke_data,
+    sep=",",
+    header=None,
+    names=["u","v"])
+```
+
+# Explore the data
+```{python}
+#Initate 1-node, undirected,unweighted network
+g = nx.from_pandas_edgelist(ke, source="u", target="v")
+nx.draw_kamada_kawai(g, node_size=10, node_color="lime", alpha=0.5)
+
+#Check the connectedness of a Info Xchange network (if unconnected some algorithms won't work)
+nx.is_connected(g)
+
+#Number of connections per person
+g_node_degree = g.degree()
+
+#Average of 12 connections per employee
+g_k = np.mean([d for n, d in g_node_degree])
+print(g_k)
+```
+
+# Visualise the Degree Distrubition
+```{python}
+#Calculate frequency of each node. 
+g_dd = Counter([d for n, d in g_node_degree])
+
+
+#Plot graph
+fig = plt.figure(figsize=(6, 4))
+ax0 = fig.add_subplot(121)
+props = [_/len(g_node_degree()) for _ in g_dd.values()]
+ax0.scatter(g_dd.keys(), props, color='lime')
+ax0.set_xlabel('Number of Degrees')
+ax0.set_ylabel('Proportion of nodes')
+ax0.set_title('Knowledge Exchange Network')
+ax0.set_xticks(np.arange(8, 16, 2))
+
+plt.show() 
+```
+
+# Calculate Network Variables
+```{python}
+# Avg Degree per node
+avg_degree_dict = dict(nx.degree(g))
+print(avg_degree_dict)
+
+# Clustering coefficient per node
+clustering_dict = nx.clustering(g)
+print(clustering_dict)
+
+# Betweenness centrality per node
+betweenness_dict = nx.betweenness_centrality(g)
+print(betweenness_dict)
+
+# Constraint index
+constraint_dict = nx.constraint(g)
+print(constraint_dict)
+```
+
+# Create individual DataFrames
+```{python}
+
+avg_degree_df = pd.DataFrame({"empl_id": list(avg_degree_dict.keys()), "avg_degree": list(avg_degree_dict.values())})
+clustering_df = pd.DataFrame({"empl_id": list(clustering_dict.keys()), "clustering": list(clustering_dict.values())})
+betweenness_df = pd.DataFrame({"empl_id": list(betweenness_dict.keys()), "betweenness_centrality": list(betweenness_dict.values())})
+constraint_df = pd.DataFrame({"empl_id": list(constraint_dict.keys()), "constraint": list(constraint_dict.values())})
+```
+
+# Merge all DataFrames on 'empl_id'
+```{python}
+
+network_variables = avg_degree_df.merge(clustering_df,on="empl_id", how="outer") \
+                              .merge(betweenness_df, on="empl_id", how="outer") \
+                              .merge(constraint_df, on="empl_id", how="outer")
+
+network_variables
+```
+
+# Import Team-Employee Affiliation data
+```{python}
+teams_data = "https://raw.githubusercontent.com/simoneSantoni/net-analysis-smm638/d67cda1b431fba337f760acc6d98bdcf47a1f417/midTermProject/team_employee_affiliations.csv"
+
+teams = pd.read_csv(teams_data,
+    header=0,
+    )
+```
+
+# Explore the data
+```{python}
+#View the Data
+teams
+
+#Visualising Teams networks
+g1 = nx.from_pandas_edgelist(teams, source="empl_id", target="team_id")
+nx.draw_kamada_kawai(g1, node_size=8, node_color="lime", alpha=0.5)
+```
+
+# Merge team data using "empl_id" as the key
+```{python}
+# Merging all cases ound in both datasets
+dataA = pd.merge(network_variables, teams, on="empl_id", how="inner")
+
+# View the Merged Data
+dataA
+```
+
+# Calculate Average Network Variables
+```{python}
+#Average Clustering Coeffiecient based on Teams
+dfA = dataA.groupby('team_id')["avg_degree"].aggregate([np.mean]).reset_index()
+dfA = dfA.rename(columns={'mean': 'mean_avg_degree'})
+
+#Average Degree distribution in a Team
+dfB = dataA.groupby('team_id')["clustering"].aggregate([np.mean]).reset_index()
+dfB = dfB.rename(columns={'mean': 'mean_clustering'})
+
+#Average Constraints in a Team
+dfC = dataA.groupby('team_id')["betweenness_centrality"].aggregate([np.mean]).reset_index()
+dfC = dfC.rename(columns={'mean': 'mean_betweenness'})
+
+#Average Betweeness Centrality in a Team
+dfD = dataA.groupby('team_id')["constraint"].aggregate([np.mean]).reset_index()
+dfD = dfD.rename(columns={'mean': 'mean_constraint'})
+```
+
+# Import Project Outcomes data
+```{python}
+outcome_data = "https://raw.githubusercontent.com/simoneSantoni/net-analysis-smm638/d67cda1b431fba337f760acc6d98bdcf47a1f417/midTermProject/project_outcomes.csv"
+
+outcome = pd.read_csv(outcome_data,
+    header=0,
+    )
+
+outcome
+```
+
+
+# Merge with Outcomes data
+```{python}
+#Merge data frames, keeping all cases
+A1 = pd.merge(outcome, dfA, on="team_id", how="outer")
+A2 = pd.merge(A1,dfB, on="team_id", how="outer")
+A3 = pd.merge(A2,dfC, on="team_id", how="outer")
+A4 = pd.merge(A3,dfD, on="team_id", how="outer")
+
+#Create new column and add to file
+A4['log_project_tech_success2'] = np.log(A4['project_tech_success'] + 1)
+A4
+
+#Create new CSV file
+with open('outcomes_final.csv', 'w') as f:
+    A4.to_csv(f, header=True, index=False)
+```
+
+# Exploratory Data Analysis 
+```{python}
+#load libraries
+import seaborn as sns
+```
+
+# Univariate Box Plots
+# Average Degree vs Project Success
+
+```{python}
+plt.figure(figsize=(10, 6))
+sns.boxplot(x ="project_tech_success", y="mean_avg_degree", hue="project_tech_success", data=A4)
+plt.title("Boxplot of Project Tech Success with Mean Average Degree")
+plt.xlabel("Project Success")
+plt.ylabel("Values")
+plt.legend(frameon=False)
+plt.show()
+```
+
+# Average Clustering Coefficient vs Project Success
+
+```{python}
+plt.figure(figsize=(10, 6))
+sns.boxplot(x ="project_tech_success", y="mean_clustering", hue="project_tech_success", data=A4)
+plt.title("Boxplot of Project Tech Success with Mean Clustering Coefficient")
+plt.xlabel("Project Success")
+plt.ylabel("Values")
+plt.legend(frameon=False)
+plt.show()
+```
+
+# Average Burt's Constraints vs Project Success
+
+```{python}
+plt.figure(figsize=(10, 6))
+sns.boxplot(x ="project_tech_success", y="mean_constraint", hue="project_tech_success", data=A4)
+plt.title("Boxplot of Project Tech Success with Mean Burt's Constraints")
+plt.xlabel("Project Success")
+plt.ylabel("Values")
+plt.legend(frameon=False)
+plt.show()
+```
+
+# Average Betweenness Centrality vs Project Success
+
+```{python}
+plt.figure(figsize=(10, 6))
+sns.boxplot(x ="project_tech_success", y="mean_betweenness", hue="project_tech_success", data=A4)
+plt.title("Boxplot of Project Tech Success with Mean Betweenness Centrality")
+plt.xlabel("Project Success")
+plt.ylabel("Values") #values for what?
+plt.legend(frameon=False)
+plt.show()
+```
+
+# Bivariate Scatterplots
+# D.1 Project Duration vs Mean Degree
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_avg_degree',
+                y='project_duration',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+
+ax = plt.gca()
+# Set the titles
+plt.title("D.1 Project Duration vs Mean Degree")
+ax.set_xlabel("Mean Degree")
+ax.set_ylabel("Project Duration")
+plt.show()
+```
+
+# D.2 Project Duration vs Mean Clustering
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_clustering',
+                y='project_duration',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("D.2 Project Duration vs Mean Clustering")
+ax.set_xlabel("Mean Clustering")
+ax.set_ylabel("Project Duration")
+plt.show()
+```
+
+# D.3 Project Duration vs Mean Constraints
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_constraint',
+                y='project_duration',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("D.3 Project Duration vs Mean Constraints")
+ax.set_xlabel("Mean Constraints")
+ax.set_ylabel("Project Duration")
+plt.show()
+```
+
+# D.4 Project Duration vs Mean BC
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_betweenness',
+                y='project_duration',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("D.4 Project Duration vs Mean Betweenness Centrality")
+ax.set_xlabel("Mean Betweenness Centrality")
+ax.set_ylabel("Project Duration")
+plt.show()
+```
+
+# N.1 Project Novelty vs Mean Degree
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_avg_degree',
+                y='project_novelty',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("N.1 Project Novelty vs Mean Degree")
+ax.set_xlabel("Mean Degree")
+ax.set_ylabel("Project Novelty")
+plt.show()
+```
+
+# N.2 Project Novelty vs Mean Clustering
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_clustering',
+                y='project_novelty',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("N.2 Project Novelty vs Mean Clustering Coefficient")
+ax.set_xlabel("Mean Clustering Coefficient")
+ax.set_ylabel("Project Novelty")
+plt.show()
+```
+
+# N.3 Project Novelty vs Mean Constraint
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_constraint',
+                y='project_novelty',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("N.3 Project Novelty vs Mean Constraint")
+ax.set_xlabel("Mean Constraint")
+ax.set_ylabel("Project Novelty")
+plt.show()
+```
+
+# N.4 Project Novelty vs Mean Betweenness Centrality
+```{python}
+
+plt.figure(figsize=(6, 3))
+sns.scatterplot(x='mean_betweenness',
+                y='project_novelty',
+                hue="project_tech_success",
+                palette={0: 'red', 1: 'green'},
+                data=A4,
+                legend=False)
+ax = plt.gca()
+# Set the titles
+plt.title("N.4 Project Novelty vs Mean Betweenness Centrality")
+ax.set_xlabel("Mean Betweenness Centrality")
+ax.set_ylabel("Project Novelty")
+plt.show()
+```
+
+# Correlation Heatmap 
+```{python}
+
+sns.heatmap(A4[['mean_avg_degree', 'mean_betweenness', 'mean_constraint',]].corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+plt.show()
+```
+
+# Statistical Analysis
+
+```{python}
+#import libraries
+from sklearn.linear_model import LinearRegression
+import statsmodels.api as sm
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+import scipy.stats
+```
+
+# Define Variables
+```{python}
+
+X1 = A4['mean_avg_degree']
+X2 = A4['mean_clustering']
+X3 = A4['mean_betweenness']
+X4 = A4['mean_constraint']
+X5 = A4['log_project_tech_success2']
+X6 = A4['project_duration']
+X7 = A4['project_novelty']
+
+X_full = pd.DataFrame({'mean_avg_degree': X1, 'mean_clustering': X2, 'mean_betweenness': X3, 'mean_constraint': X4,'log_project_tech_success2': X5, 'project_duration': X6, 'project_novelty': X7}, index=A4.index)
+
+#add an intercept 
+X_full = sm.add_constant(X_full)
+```
+
+
+# Linear Regression model (Project Success vs Everything)
+```{python}
+
+Xresult = X_full[['const','mean_avg_degree', 'mean_clustering', 'mean_betweenness', 'mean_constraint','project_duration','project_novelty']] #pick whcih to use in regression
+mod1 = LinearRegression()
+mod1 = sm.OLS(X5, Xresult)
+results = mod1.fit()
+print(results.summary())
+```
+
+# Linear Regression model (Project Success vs Network Variables)
+```{python}
+
+Xresult = X_full[['const','mean_avg_degree', 'mean_clustering', 'mean_betweenness', 'mean_constraint']]
+mod1 = LinearRegression()
+mod1 = sm.OLS(X5, Xresult)
+results = mod1.fit()
+print(results.summary())
+```
+
+# Linear Regression model (Project Duration vs Network Variables)
+```{python}
+
+mod2 = LinearRegression()
+mod2 = sm.OLS(X6, Xresult)
+results2 = mod2.fit()
+print(results2.summary())
+```
+
+# Linear Regression model (Project Novelty vs Network Variables)
+```{python}
+
+mod3 = LinearRegression()
+mod3 = sm.OLS(X7, Xresult)
+results3 = mod3.fit()
+print(results3.summary())
+```
+
+# Pearsons Correlation Coefficient (PCC)
+# With Project Success
+```{python}
+
+cor1 = scipy.stats.pearsonr(X5, X1)
+print(cor1)
+
+cor2 = scipy.stats.pearsonr(X5, X2)
+print(cor2)
+
+cor3 = scipy.stats.pearsonr(X5, X3)
+print(cor3)
+
+cor4 = scipy.stats.pearsonr(X5, X4)
+print(cor4)
+```
+
+# With Project Duration
+```{python}
+
+cor5 = scipy.stats.pearsonr(X6, X1)
+print(cor5)
+
+cor6 = scipy.stats.pearsonr(X6, X2)
+print(cor6)
+
+cor7 = scipy.stats.pearsonr(X6, X3)
+print(cor7)
+
+cor8 = scipy.stats.pearsonr(X6, X4)
+print(cor8)
+```
+
+# With Project Novelty
+```{python}
+
+cor9 = scipy.stats.pearsonr(X7, X1)
+print(cor9)
+
+cor10 = scipy.stats.pearsonr(X7, X2)
+print(cor10)
+
+cor11 = scipy.stats.pearsonr(X7, X3)
+print(cor11)
+
+cor12 = scipy.stats.pearsonr(X7, X4)
+print(cor12)
+```
