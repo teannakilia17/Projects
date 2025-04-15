@@ -22,4 +22,4 @@ Welcome to my repository showcasing the projects I completed during my Master's 
 - **Statistical & Optimization Tools:** Statsmodels, SciPy,
 
 ---
-This repository serves as a portfolio of my expertise in business analytics, data science, and pricing strategies. Stay tuned for updates! 🚀
+This repository serves as a portfolio of my expertise in business analytics, data science, and pricing strategies. 
