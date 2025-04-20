@@ -33,6 +33,7 @@ Design and pitch a business model centred on a deep learning solution that predi
 - Achieved ~84% AUC on test set.
 - Demonstrated practical viability in a clinical screening setting.
 - Next steps: acquire real-time patient data via EHR integration to improve generalisation.
+- Presentation : https://youtu.be/8Vr_th0Lvb4
 
 ---
 
