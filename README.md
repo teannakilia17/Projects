@@ -1,5 +1,5 @@
 # Projects
-Welcome to my repository showcasing the projects I completed during my Master's in Business Analytics. These projects focus on key areas such as machine learning, analytical modeling, and revenue pricing, leveraging R and Python to derive data-driven insights.
+Welcome to my repository highlighting data-driven projects across machine learning, analytical modelling, and revenue optimisation. These examples demonstrate my ability to extract insights and build impactful solutions using Python and R.
 
 ## 📌 Project Categories
 - **Machine Learning & Predictive Analytics**
