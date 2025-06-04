@@ -1,6 +1,6 @@
 ## 🚀 Project 1: Diabetes Detection Neural Network & HealthTech Business Model
 
-**Assignment Type:** Group Project – Business-Focused Neural Network Deployment  
+**Assignment Type:** Business-Focused Neural Network Deployment  
 **Dataset Used:** [Diabetes Prediction Dataset on Kaggle](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset)  
 **Business Idea:** AI-powered early-warning system for Type II Diabetes screening in primary care and telemedicine clinics.
 

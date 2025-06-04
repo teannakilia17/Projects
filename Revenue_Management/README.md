@@ -8,7 +8,7 @@ The problem sets focus on **pricing optimization, revenue maximization, and stra
 
 ## 📂 Problem Sets  
 
-### 📌 **Problem Set 1 – Hotel & Airline Revenue Optimization**  
+### 📌 **Hotel & Airline Revenue Optimization**  
 
 **🔍 Overview**  
 This problem set focuses on **revenue optimization strategies for a hotel and an airline network**, applying pricing policies and dynamic programming concepts.  
@@ -26,11 +26,9 @@ This problem set focuses on **revenue optimization strategies for a hotel and an
 3. **Real-World Application of Pricing Models**  
    - Identify a **real-world pricing problem** (e.g., a London-based service) and propose a pricing optimization model.  
 
-📂 *Files: [SMM641 ProblemSet1.pdf](https://github.com/user-attachments/files/18771445/SMM641.ProblemSet1.pdf)*
-
 ---
 
-### 📌 **Problem Set 2 – Congestion Pricing & Strategic Pricing Decisions**  
+### 📌 **Congestion Pricing & Strategic Pricing Decisions**  
 
 **🔍 Overview**  
 This problem set examines **urban congestion pricing** and its impact on revenue and emissions. It also extends the **strategic pricing framework** introduced in Problem Set 1.  
@@ -45,10 +43,8 @@ This problem set examines **urban congestion pricing** and its impact on revenue
    - Identify a new **pricing problem in a real-world setting** and develop an optimization approach.  
    - Can extend the setting from Problem Set 1 or explore a new business scenario.  
 
-📂 *Files:[SMM641 ProblemSet2.pdf](https://github.com/user-attachments/files/18771447/SMM641.ProblemSet2.pdf)*
-
 --- 
-### 📌 **Problem Set 3 – Group Project and Santander Cycle **  
+### 📌 ** Santander Cycle **  
 
 This project applies revenue management principles to optimize the pricing and operational efficiency of Santander Cycles, a bike-sharing scheme in London. Given challenges such as competition from Lime and high redistribution costs, our goal was to develop dynamic pricing strategies to improve revenue and bike utilization.
 
@@ -80,15 +76,6 @@ As a group, we acted as revenue management consultants tasked with analyzing and
    - Apply targeted incentives to balance bike availability.
    - Continuously monitor demand for adaptive pricing adjustments.
 
-## Individual Component
-### Task Description
-Each group member submitted an individual report summarizing the project and proposing an extension.
-
-## Code & Data
-- Our analysis was implemented in R, using `nloptr` for optimization and `ggplot2` for visualization.
-- Simulated data was used to model demand, but real-world TfL data can be incorporated for further refinement.
-
-📂 *Files:[SMM641 ProblemSet3.pdf](https://github.com/user-attachments/files/18771447/SMM641.ProblemSet3.pdf)*
 
 
 

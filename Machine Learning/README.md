@@ -1,6 +1,6 @@
 # Summary of Machine Learning Assignments
 
-## 1. Individual Assignment – Coronary Heart Disease Prediction 
+## 1. Coronary Heart Disease Prediction 
 
 **Dataset:** Males from a high-risk region in Western Cape, South Africa  
 **Objective:** Predict likelihood of coronary heart disease (CHD)  
@@ -28,7 +28,7 @@
 
 ---
 
-## 2. Group Coursework 2 – Clustering and PCA of IMDB Movies
+## 2. Clustering and PCA of IMDB Movies
 
 **Dataset:** 50 Top-rated IMDB Movies (Cleaned to 47 rows)  
 **Objective:** Uncover latent patterns using unsupervised learning  
@@ -52,7 +52,7 @@
 
 ---
 
-## 3. Group Coursework – Shiny App for Diabetes Prediction 
+## 3. Shiny App for Diabetes Prediction 
 
 **Dataset:** Pima Indians Diabetes Dataset  
 **Objective:** Build an interactive Shiny application to visualise and compare Decision Tree and Random Forest classifiers  
